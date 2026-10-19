@@ -47,6 +47,73 @@ Change 123456789ABC to your miniserver Serial Number.
 6. Add the Integration and fill out all required fields
 7. Restart Home-Assistant
 
+## Optional Audioserver audio support (experimental)
+
+Show track information and artwork on your existing Loxone audio players in
+Home Assistant. This feature is optional and is off until you set it up.
+
+### What it adds
+
+- Track title, artist, album and artwork, when the Audio Server provides them.
+- The current source, such as Spotify, Loxone Radio, AirPlay, Local Library,
+  TuneIn or Line-In.
+- Information about doorbells, spoken messages, announcements and alarms playing
+  in each room. You can use this information in automations.
+
+You can keep using Home Assistant's built-in media card. There is also an
+[optional PyLoxone Audio card](frontend/README.md) with a larger player view.
+Use either card, or both. You do not need the custom card to get track information.
+
+### Setup
+
+1. Open the PyLoxone options in **Settings → Devices & services**.
+2. In **Audioserver host**, enter your Audio Server's IP address or hostname.
+   Do not add `http://`, a port number or a username and password.
+3. Save the options. Track information appears when playback next changes.
+
+You can configure one Audio Server per PyLoxone integration. To turn the feature
+off, disable the player play/pause option if enabled, then clear the host field
+and save.
+
+### Play and pause
+
+The **Use Audio Server player play/pause** option lets Home Assistant pause and
+resume the current selection.
+Turn it on in the same options page if you want to try it. Leave it off to keep
+existing play/pause behaviour.
+
+Volume and supported track-skip controls remain available. Previous and next
+buttons are hidden for Loxone Radio because they have no function for that source.
+
+This does not yet add a way to choose another source, station or playlist, search
+for music, or move to a different point within a track. Use the Loxone app or
+your music app to choose what to play.
+
+### Things to know
+
+- After a Home Assistant restart, track information may stay empty until
+  playback changes in that room.
+- Available track details depend on the source. If no album name is supplied,
+  the custom card leaves out the album row.
+- Play or pause may reset the volume to the room's configured default. This can
+  also happen in the Loxone app; this feature does not change that setting.
+- Alarm information is for display and automations. Do not use it as a replacement
+  for your alarm or fire-safety system.
+
+Use this feature only on a trusted home network. The Audio Server connection is
+not yet encrypted. With the play/pause option enabled, someone intercepting it could
+steal the login token. Do not expose port `7091` to the internet.
+
+### Languages
+
+The new audio settings, messages and custom card support **English, German, Spanish, French, Italian, Dutch, Portuguese and
+Czech**. They follow your Home Assistant language setting. The custom card uses
+English for other languages. Song titles, artist names and album names stay as
+provided by your music service.
+
+[Developer notes and tests](docs/audioserver-development.md) are available for
+contributors.
+
 ## Supported Loxone Entities
 Currently, this integration supports the following Loxone entities by mapping them to Home Assistant entities.
 If you encounter a Loxone entity that is currently not supported, you can post a feature request so it can be looked into.
